@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Boxiocns CDN Link -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="sidebar close">
+      <div class="logo-details">
+        <i class="bx bxl-c-plus-plus"></i>
+        <span class="logo_name">Chat PDF</span>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="#">
+            <i class="bx bx-grid-alt"></i>
+            <span class="link_name">Dashboard</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">User 1</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="iocn-link">
+            <a href="#">
+              <i class="bx bx-collection"></i>
+              <span class="link_name">User 1</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name" href="#">User 1</a></li>
+            <li><a href="#">HTML.pdf</a></li>
+            <li><a href="#">JavaScript.pdf</a></li>
+            <li><a href="#">MySQL.pdf</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="iocn-link">
+            <a href="#">
+              <i class="bx bx-collection"></i>
+              <span class="link_name">User 2</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name" href="#">User 2</a></li>
+            <li><a href="#">Web Design.pdf</a></li>
+            <li><a href="#">Login Form.pdf</a></li>
+            <li><a href="#">Card Design.pdf</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-collection"></i>
+            <span class="link_name">User 3</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">User 3</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-collection"></i>
+            <span class="link_name">User 4</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">User 4</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="iocn-link">
+            <a href="#">
+              <i class="bx bx-collection"></i>
+              <span class="link_name">User 5</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name" href="#">User 5</a></li>
+            <li><a href="#">UI.pdf</a></li>
+            <li><a href="#">Pigments.pdf</a></li>
+            <li><a href="#">Icons.pdf</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-collection"></i>
+            <span class="link_name">User 6</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">User 6</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-history"></i>
+            <span class="link_name">History</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">History</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-cog"></i>
+            <span class="link_name">Settings</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">Settings</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="profile-details">
+            <div class="profile-content">
+              <img src="" alt="PDF Img" />
+            </div>
+            <div class="name-job" id="uploadSection">
+                <div class="profile_name">Upload PDF</div>
+                <div class="job" id="dropArea">Drag and Drop Here</div>
+                <input type="file" id="fileInput" style="display: none;" />
+              </div>
+          
+              <script>
+                // Function to handle file upload
+                function handleFileUpload(file) {
+                  // Update the content dynamically
+                  document.getElementById("uploadSection").innerHTML = `
+                    <div class="profile_name">PDF Uploaded:</div>
+                    <div class="job">${file.name}</div>
+                  `;
+                }
+          
+                // Drag and drop event handlers
+                const dropArea = document.getElementById("dropArea");
+          
+                // Prevent default behavior when dragging over the drop area
+                dropArea.addEventListener("dragover", (e) => {
+                  e.preventDefault();
+                });
+          
+                // Handle the dropped files
+                dropArea.addEventListener("drop", (e) => {
+                  e.preventDefault();
+                  const file = e.dataTransfer.files[0];
+                  handleFileUpload(file);
+                });
+          
+                // Click event on "Upload PDF" to trigger file input
+                document.getElementById("uploadSection").addEventListener("click", () => {
+                  document.getElementById("fileInput").click();
+                });
+          
+                // Change event on file input
+                document.getElementById("fileInput").addEventListener("change", (e) => {
+                  const file = e.target.files[0];
+                  handleFileUpload(file);
+                });
+              </script>
+            <i class="bx "></i>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <section class="home-section">
+        <div class="home-content">
+          <i class="bx bx-menu"></i>
+          <span class="text">Uploaded PDF</span>
+        </div>
+  
+        <div class="container">
+          <!-- Container 1 - PDF Viewer -->
+          <div class="uploaded-container" id="pdfViewerContainer">
+            <h2>PDF Viewer</h2>
+            <iframe id="pdfViewer" width="100%" height="500px" frameborder="0"></iframe>
+          </div>
+  
+          <!-- Container 2 - Empty -->
+          <!-- Container 2 - Chat Container -->
+<div class="uploaded-container">
+  <h2>Chat Over Here</h2>
+  <div class="chat-container">
+      <div class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+      <div class="message">Nullam nec mauris at magna aliquam rhoncus.</div>
+      <!-- More messages can be added dynamically or statically -->
+  </div>
+  <div class="input-container">
+      <input class="input-field" type="text" placeholder=" " />
+      <label class="floating-label">Type Here...</label>
+  </div>
+</div>
+
+            </div>
+        </div>
+      </section>
+  
+      <script>
+        // Function to handle file upload
+        function handleFileUpload(file) {
+          // Update the content dynamically
+          document.getElementById("uploadSection").innerHTML = `
+            <div class="profile_name">PDF Uploaded:</div>
+            <div class="job">${file.name}</div>
+          `;
+  
+          // Display the uploaded PDF in the PDF Viewer section
+          const pdfViewer = document.getElementById("pdfViewer");
+          const pdfViewerContainer = document.getElementById("pdfViewerContainer");
+          pdfViewer.src = URL.createObjectURL(file);
+          pdfViewerContainer.style.display = "block";
+        }
+      let arrow = document.querySelectorAll(".arrow");
+      for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+          let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+          arrowParent.classList.toggle("showMenu");
+        });
+      }
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".bx-menu");
+      console.log(sidebarBtn);
+      sidebarBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+      });
+    </script>
+  </body>
+</html>
