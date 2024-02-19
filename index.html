@@ -210,26 +210,46 @@
             <div class="profile_name">PDF Uploaded:</div>
             <div class="job">${file.name}</div>
           `;
-  
+      
           // Display the uploaded PDF in the PDF Viewer section
           const pdfViewer = document.getElementById("pdfViewer");
           const pdfViewerContainer = document.getElementById("pdfViewerContainer");
           pdfViewer.src = URL.createObjectURL(file);
           pdfViewerContainer.style.display = "block";
+      
+          // Wait for the PDF viewer iframe to fully load
+          pdfViewer.addEventListener("load", () => {
+            // Function to handle text selection in the PDF viewer
+            function handleTextSelection() {
+              const iframeDoc = pdfViewer.contentDocument || pdfViewer.contentWindow.document;
+      
+              iframeDoc.addEventListener("mouseup", () => {
+                const selectedText = iframeDoc.getSelection().toString().trim();
+                if (selectedText) {
+                  document.querySelector(".input-field").value = selectedText;
+                }
+              });
+            }
+      
+            // Call the function to handle text selection
+            handleTextSelection();
+          });
         }
-      let arrow = document.querySelectorAll(".arrow");
-      for (var i = 0; i < arrow.length; i++) {
-        arrow[i].addEventListener("click", (e) => {
-          let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-          arrowParent.classList.toggle("showMenu");
+      
+        let arrow = document.querySelectorAll(".arrow");
+        for (var i = 0; i < arrow.length; i++) {
+          arrow[i].addEventListener("click", (e) => {
+            let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+            arrowParent.classList.toggle("showMenu");
+          });
+        }
+      
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+        sidebarBtn.addEventListener("click", () => {
+          sidebar.classList.toggle("close");
         });
-      }
-      let sidebar = document.querySelector(".sidebar");
-      let sidebarBtn = document.querySelector(".bx-menu");
-      console.log(sidebarBtn);
-      sidebarBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("close");
-      });
-    </script>
+      </script>
+      
   </body>
 </html>
