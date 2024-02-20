@@ -245,73 +245,74 @@
 }
 .container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 20px; /* Adjust margin as needed */
+  margin-top: 20px;
 }
 
 .uploaded-container {
-  width: 48%; /* Adjust width as needed */
-  background: #fff; /* Add your desired background color */
+  width: 100%;
+  max-width: 48%;
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow for styling */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .uploaded-container h2 {
   font-size: 18px;
   margin-bottom: 10px;
-  /* Additional styles for heading */
 }
 
-/* Add your existing styles here */
+.uploaded-container .chat-container {
+  max-height: 440px; /* Adjust height as needed */
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
 
-/* Styles for the new input field */
-.uploaded-container {
-    margin-top: 20px;
-  }
-  
-  .uploaded-container .chat-container {
-    height: 440px; /* Adjust height as needed */
-    overflow-y: auto;
-    margin-bottom: 10px;
-    }
+.uploaded-container .message {
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
-  .uploaded-container .message {
-    background-color: #f2f2f2;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 10px;
-    }
+.uploaded-container .input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
 
-  .uploaded-container .input-container {
-    position: relative;
-    margin-bottom: 20px;
-    }
+.uploaded-container .input-field {
+  width: calc(100% - 12px);
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  transition: all 0.2s linear;
+}
 
-  .uploaded-container .input-field {
-    width: calc(100% - 12px); /* Adjust width as needed */
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    transition: all 0.2s linear;
-    }
-
-  .uploaded-container .floating-label {
-    font-size: 1rem;
-    pointer-events: none;
-    padding-top: 0.5rem;
-    color: gray;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: all 0.2s linear;
-    }
+.uploaded-container .floating-label {
+  font-size: 1rem;
+  pointer-events: none;
+  padding-top: 0.5rem;
+  color: gray;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.2s linear;
+}
 
 .uploaded-container .input-field:not(:placeholder-shown) + .floating-label,
 .uploaded-container .input-field:focus + .floating-label {
-    font-size: 0.8rem;
-    transform: translateY(-1.9rem);
+  font-size: 0.8rem;
+  transform: translateY(-1.9rem);
 }
 
 .uploaded-container .input-field:focus + .floating-label {
-    color: black;
+  color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .uploaded-container {
+    max-width: 100%;
+  }
 }

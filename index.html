@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
     <link rel="stylesheet" href="style.css" />
-    <!-- Boxiocns CDN Link -->
     <link
       href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.js"></script>
+
   </head>
   <body>
     <div class="sidebar close">
@@ -130,126 +130,179 @@
               </div>
           
               <script>
-                // Function to handle file upload
+                // Function to handle file upload and render PDF
                 function handleFileUpload(file) {
                   // Update the content dynamically
                   document.getElementById("uploadSection").innerHTML = `
                     <div class="profile_name">PDF Uploaded:</div>
                     <div class="job">${file.name}</div>
                   `;
+              
+                  // Display the uploaded PDF using PDF.js
+                  const pdfViewerContainer = document.getElementById("pdfViewerContainer");
+                  pdfViewerContainer.style.display = "block";
+              
+                  // Load and render PDF using PDF.js
+                  const pdfCanvas = document.getElementById("pdfCanvas");
+                  const pdfFileReader = new FileReader();
+              
+                  pdfFileReader.onload = function () {
+                    const pdfData = new Uint8Array(this.result);
+                    renderPdf(pdfData, pdfCanvas);
+                  };
+              
+                  pdfFileReader.onerror = function (error) {
+                    console.error('Error reading the file:', error);
+                  };
+              
+                  pdfFileReader.readAsArrayBuffer(file);
                 }
-          
+              
+                // Function to render PDF using PDF.js
+                function renderPdf(data, canvas) {
+                  pdfjsLib.getDocument({ data: data }).promise.then((pdf) => {
+                    pdf.getPage(1).then((page) => {
+                      const context = canvas.getContext("2d");
+                      const viewport = page.getViewport({ scale: 1 });
+                      canvas.width = viewport.width;
+                      canvas.height = viewport.height;
+              
+                      const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                      };
+              
+                      page.render(renderContext);
+                    });
+                  }).catch((error) => {
+                    console.error('Error rendering PDF:', error);
+                  });
+                }
+              
                 // Drag and drop event handlers
                 const dropArea = document.getElementById("dropArea");
-          
+              
                 // Prevent default behavior when dragging over the drop area
                 dropArea.addEventListener("dragover", (e) => {
                   e.preventDefault();
                 });
-          
+              
                 // Handle the dropped files
                 dropArea.addEventListener("drop", (e) => {
                   e.preventDefault();
                   const file = e.dataTransfer.files[0];
                   handleFileUpload(file);
                 });
-          
+              
                 // Click event on "Upload PDF" to trigger file input
                 document.getElementById("uploadSection").addEventListener("click", () => {
                   document.getElementById("fileInput").click();
                 });
-          
+              
                 // Change event on file input
                 document.getElementById("fileInput").addEventListener("change", (e) => {
                   const file = e.target.files[0];
                   handleFileUpload(file);
                 });
               </script>
+              
             <i class="bx "></i>
           </div>
         </li>
       </ul>
     </div>
     <section class="home-section">
-        <div class="home-content">
-          <i class="bx bx-menu"></i>
-          <span class="text">Uploaded PDF</span>
-        </div>
-  
-        <div class="container">
-          <!-- Container 1 - PDF Viewer -->
-          <div class="uploaded-container" id="pdfViewerContainer">
-            <h2>PDF Viewer</h2>
-            <iframe id="pdfViewer" width="100%" height="500px" frameborder="0"></iframe>
-          </div>
-  
-          <!-- Container 2 - Empty -->
-          <!-- Container 2 - Chat Container -->
-<div class="uploaded-container">
-  <h2>Chat Over Here</h2>
-  <div class="chat-container">
-      <div class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-      <div class="message">Nullam nec mauris at magna aliquam rhoncus.</div>
-      <!-- More messages can be added dynamically or statically -->
-  </div>
-  <div class="input-container">
-      <input class="input-field" type="text" placeholder=" " />
-      <label class="floating-label">Type Here...</label>
-  </div>
-</div>
+      <div class="home-content">
+        <i class="bx bx-menu"></i>
+        <span class="text">Uploaded PDF</span>
+      </div>
 
-            </div>
+      <div class="container">
+        <!-- Container 1 - PDF Viewer -->
+        <div class="uploaded-container" id="pdfViewerContainer">
+          <h2>PDF Viewer</h2>
+          <canvas id="pdfCanvas" width="100%" height="500px"></canvas>
         </div>
-      </section>
-  
-      <script>
-        // Function to handle file upload
-        function handleFileUpload(file) {
-          // Update the content dynamically
-          document.getElementById("uploadSection").innerHTML = `
-            <div class="profile_name">PDF Uploaded:</div>
-            <div class="job">${file.name}</div>
-          `;
-      
-          // Display the uploaded PDF in the PDF Viewer section
-          const pdfViewer = document.getElementById("pdfViewer");
-          const pdfViewerContainer = document.getElementById("pdfViewerContainer");
-          pdfViewer.src = URL.createObjectURL(file);
-          pdfViewerContainer.style.display = "block";
-      
-          // Wait for the PDF viewer iframe to fully load
-          pdfViewer.addEventListener("load", () => {
-            // Function to handle text selection in the PDF viewer
-            function handleTextSelection() {
-              const iframeDoc = pdfViewer.contentDocument || pdfViewer.contentWindow.document;
-      
-              iframeDoc.addEventListener("mouseup", () => {
-                const selectedText = iframeDoc.getSelection().toString().trim();
-                if (selectedText) {
-                  document.querySelector(".input-field").value = selectedText;
-                }
-              });
-            }
-      
-            // Call the function to handle text selection
-            handleTextSelection();
+
+        <!-- Container 2 - Empty -->
+        <div class="uploaded-container">
+          <h2>Chat Over Here</h2>
+          <div class="chat-container">
+            <div class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+            <div class="message">Nullam nec mauris at magna aliquam rhoncus.</div>
+          </div>
+          <div class="input-container">
+            <input class="input-field" type="text" placeholder=" " />
+            <label class="floating-label">Type Here...</label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Function to handle file upload
+      function handleFileUpload(file) {
+        // Update the content dynamically
+        document.getElementById("uploadSection").innerHTML = `
+          <div class="profile_name">PDF Uploaded:</div>
+          <div class="job">${file.name}</div>
+        `;
+
+        // Display the uploaded PDF using PDF.js
+        const pdfViewerContainer = document.getElementById("pdfViewerContainer");
+        pdfViewerContainer.style.display = "block";
+
+        // Load and render PDF using PDF.js
+        const pdfCanvas = document.getElementById("pdfCanvas");
+        const pdfFileReader = new FileReader();
+
+        pdfFileReader.onload = function () {
+          const pdfData = new Uint8Array(this.result);
+          renderPdf(pdfData, pdfCanvas);
+        };
+
+        pdfFileReader.onerror = function (error) {
+          console.error('Error reading the file:', error);
+        };
+
+        pdfFileReader.readAsArrayBuffer(file);
+      }
+
+      function renderPdf(data, canvas) {
+        // Using PDF.js to render the PDF
+        pdfjsLib.getDocument({ data: data }).promise.then((pdf) => {
+          pdf.getPage(1).then((page) => {
+            const context = canvas.getContext("2d");
+            const viewport = page.getViewport({ scale: 1 });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            const renderContext = {
+              canvasContext: context,
+              viewport: viewport,
+            };
+
+            page.render(renderContext);
           });
-        }
-      
-        let arrow = document.querySelectorAll(".arrow");
-        for (var i = 0; i < arrow.length; i++) {
-          arrow[i].addEventListener("click", (e) => {
-            let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-            arrowParent.classList.toggle("showMenu");
-          });
-        }
-      
-        let sidebar = document.querySelector(".sidebar");
-        let sidebarBtn = document.querySelector(".bx-menu");
-        sidebarBtn.addEventListener("click", () => {
-          sidebar.classList.toggle("close");
+        }).catch((error) => {
+          console.error('Error rendering PDF:', error);
         });
-      </script>
-      
+      }
+
+      let arrow = document.querySelectorAll(".arrow");
+      for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+          let arrowParent = e.target.parentElement.parentElement; //selecting the main parent of arrow
+          arrowParent.classList.toggle("showMenu");
+        });
+      }
+
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".bx-menu");
+
+      sidebarBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+      });
+    </script>
   </body>
 </html>
