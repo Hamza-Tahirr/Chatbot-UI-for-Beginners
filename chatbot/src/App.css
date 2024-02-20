@@ -1,7 +1,30 @@
 .App {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }
 
+.home-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-container,
+.chat-container {
+  width: 45%;
+  margin: 0 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pdf-container input[type='file'] {
+  margin-top: 10px;
+}
+
+.sidebar-section {
+  width: 30%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
